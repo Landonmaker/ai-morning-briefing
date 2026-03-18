@@ -1,0 +1,31 @@
+name: Landon's AI Morning Briefing
+
+on:
+  schedule:
+    # 7:00 AM CST = 13:00 UTC (Regina doesn't observe DST)
+    - cron: '0 13 * * 1-5'   # Weekdays only
+    # To run every day including weekends, change to: '0 13 * * *'
+  workflow_dispatch:          # Lets you trigger manually from GitHub UI anytime
+
+jobs:
+  send-briefing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install anthropic requests
+
+      - name: Run briefing bot
+        run: python briefing_bot.py
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

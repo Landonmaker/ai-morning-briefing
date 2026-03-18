@@ -3,7 +3,7 @@ name: Landon's AI Morning Briefing
 on:
   schedule:
     # 7:00 AM CST = 13:00 UTC (Regina doesn't observe DST)
-    - cron: '0 13 * * 1-5'   # Weekdays only
+    - cron: '0 13 * * *'   # Weekdays only
     # To run every day including weekends, change to: '0 13 * * *'
   workflow_dispatch:          # Lets you trigger manually from GitHub UI anytime
 
